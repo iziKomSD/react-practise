@@ -34,6 +34,8 @@ export default [
         { allowConstantExport: true },
       ],
       quotes: ['error', 'single'],
+      'react/prop-types': [0],
+      // indent: ['error', 'tab'],
       // 'coma-dangle': ['error', 'never'],
       // semi: ['error', 'always', { omitLastInOneLineBlock: false }],
     },
