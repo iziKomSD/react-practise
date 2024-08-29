@@ -1,8 +1,12 @@
 import React from 'react'
 import './App.css'
-import Button from './components/Button/Button'
 import JournalItem from './components/JournalItem/JournalItem'
 import CardButton from './components/CardButton/CardButton'
+import LeftPanel from './layouts/LeftPanel/LeftPanel'
+import Body from './layouts/Body/Body'
+import Header from './components/Header/Header'
+import JournalList from './components/JournalList/JournalList'
+import JournalAddButton from './components/JournalAddButton/JournalAddButton'
 
 function App() {
   // return React.createElement('div', {}, 'Project')
@@ -20,25 +24,29 @@ function App() {
     },
   ]
   return (
-    <>
-      <h1>Heading</h1>
-      <p>Some text after heading</p>
-      <Button />
-      <CardButton>
-        <JournalItem
-          title={data[0].title}
-          text={data[0].text}
-          date={data[0].date}
-        />
-      </CardButton>
-      <CardButton>
-        <JournalItem
-          title={data[1].title}
-          text={data[1].text}
-          date={data[1].date}
-        />
-      </CardButton>
-    </>
+    <div className="app">
+      <LeftPanel>
+        <Header />
+        <JournalAddButton />
+        <JournalList>
+          <CardButton>
+            <JournalItem
+              title={data[0].title}
+              text={data[0].text}
+              date={data[0].date}
+            />
+          </CardButton>
+          <CardButton>
+            <JournalItem
+              title={data[1].title}
+              text={data[1].text}
+              date={data[1].date}
+            />
+          </CardButton>
+        </JournalList>
+      </LeftPanel>
+      <Body>Body will be here</Body>
+    </div>
   )
 }
 
