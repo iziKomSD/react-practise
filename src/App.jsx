@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css'
 import JournalItem from './components/JournalItem/JournalItem'
 import CardButton from './components/CardButton/CardButton'
@@ -7,6 +7,7 @@ import Body from './layouts/Body/Body'
 import Header from './components/Header/Header'
 import JournalList from './components/JournalList/JournalList'
 import JournalAddButton from './components/JournalAddButton/JournalAddButton'
+import JournalForm from './components/JournalForm/JournalForm'
 
 function App() {
   // return React.createElement('div', {}, 'Project')
@@ -23,6 +24,7 @@ function App() {
       date: new Date(),
     },
   ]
+
   return (
     <div className="app">
       <LeftPanel>
@@ -45,7 +47,9 @@ function App() {
           </CardButton>
         </JournalList>
       </LeftPanel>
-      <Body>Body will be here</Body>
+      <Body>
+        <JournalForm />
+      </Body>
     </div>
   )
 }
