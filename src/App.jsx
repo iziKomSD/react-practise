@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import './App.css'
-import JournalItem from './components/JournalItem/JournalItem'
-import CardButton from './components/CardButton/CardButton'
+
 import LeftPanel from './layouts/LeftPanel/LeftPanel'
 import Body from './layouts/Body/Body'
 import Header from './components/Header/Header'
@@ -34,18 +33,11 @@ function App() {
         text: item.post,
         title: item.header,
         date: new Date(item.date),
-        id: Math.max(...oldItems.map((i) => i.id)) + 1,
+        id:
+          oldItems.length > 0 ? Math.max(...oldItems.map((i) => i.id)) + 1 : 1,
       },
     ])
     console.log(item)
-  }
-
-  const sortItems = (a, b) => {
-    if (a.date < b.date) {
-      return 1
-    } else {
-      return -1
-    }
   }
 
   return (
@@ -53,14 +45,7 @@ function App() {
       <LeftPanel>
         <Header />
         <JournalAddButton />
-        <JournalList>
-          {items.length === 0 && <p>There is no data, add first</p>}
-          {items.sort(sortItems).map((el) => (
-            <CardButton key={el.id}>
-              <JournalItem title={el.title} text={el.text} date={el.date} />
-            </CardButton>
-          ))}
-        </JournalList>
+        <JournalList items={items} />
       </LeftPanel>
       <Body>
         <JournalForm onSubmit={addItem} />
