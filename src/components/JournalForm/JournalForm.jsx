@@ -4,8 +4,8 @@ import { useState } from 'react'
 
 function JournalForm({ onSubmit }) {
   const [formValidState, setFormValidState] = useState({
-    title: true,
-    text: true,
+    header: true,
+    post: true,
     date: true,
   })
 
@@ -14,17 +14,23 @@ function JournalForm({ onSubmit }) {
     const formData = new FormData(e.target)
     const formProps = Object.fromEntries(formData)
     let formIsValid = true
-    if (!formProps.title?.trim().length) {
-      setFormValidState((state) => ({ ...state, title: false }))
+    if (!formProps.header?.trim().length) {
+      setFormValidState((state) => ({ ...state, header: false }))
       formIsValid = false
+    } else {
+      setFormValidState((state) => ({ ...state, header: true }))
     }
-    if (!formProps.text?.trim().length) {
-      setFormValidState((state) => ({ ...state, text: false }))
+    if (!formProps.post?.trim().length) {
+      setFormValidState((state) => ({ ...state, post: false }))
       formIsValid = false
+    } else {
+      setFormValidState((state) => ({ ...state, post: true }))
     }
     if (!formProps.date) {
       setFormValidState((state) => ({ ...state, date: false }))
       formIsValid = false
+    } else {
+      setFormValidState((state) => ({ ...state, date: true }))
     }
     if (!formIsValid) {
       return
@@ -34,13 +40,23 @@ function JournalForm({ onSubmit }) {
   return (
     <form className="journal-form" onSubmit={addJournalItem}>
       <input
-        type="title"
+        type="text"
         name="header"
-        style={{ border: formValidState.title ? undefined : ' 1px solid red' }}
+        className={`input ${formValidState.header ? '' : 'invalid'}`}
       />
-      <input type="date" name="date" />
+      <input
+        type="date"
+        name="date"
+        className={`input ${formValidState.date ? '' : 'invalid'}`}
+      />
       <input type="text" name="tag" id="" />
-      <textarea name="post" cols={30} rows={10} />
+      <textarea
+        name="post"
+        cols={30}
+        rows={10}
+        className={`input ${formValidState.post ? '' : 'invalid'}`}
+      />
+
       <Button text="Save" />
     </form>
   )
