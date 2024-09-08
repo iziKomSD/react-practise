@@ -8,6 +8,7 @@ function JournalForm({ onSubmit }) {
     header: true,
     post: true,
     date: true,
+    tag: true,
   })
 
   const addJournalItem = (e) => {
@@ -33,6 +34,12 @@ function JournalForm({ onSubmit }) {
     } else {
       setFormValidState((state) => ({ ...state, date: true }))
     }
+    if (!formProps.tag) {
+      setFormValidState((state) => ({ ...state, tag: false }))
+      formIsValid = false
+    } else {
+      setFormValidState((state) => ({ ...state, tag: true }))
+    }
     if (!formIsValid) {
       return
     }
@@ -40,21 +47,42 @@ function JournalForm({ onSubmit }) {
   }
   return (
     <form className={css['journal-form']} onSubmit={addJournalItem}>
-      <input
-        type="text"
-        name="header"
-        className={cn(css['input'], {
-          [css['invalid']]: !formValidState.header,
-        })}
-      />
-      <input
-        type="date"
-        name="date"
-        className={cn(css['input'], {
-          [css['invalid']]: !formValidState.date,
-        })}
-      />
-      <input type="text" name="tag" id="" />
+      <div>
+        <input
+          type="text"
+          name="header"
+          className={cn(css['input'], {
+            [css['invalid']]: !formValidState.header,
+          })}
+        />
+      </div>
+      <div className={css['form-row']}>
+        <label htmlFor="date" className={css['form-labels']}>
+          Date
+        </label>
+        <input
+          type="date"
+          name="date"
+          id="date"
+          className={cn(css['input'], {
+            [css['invalid']]: !formValidState.date,
+          })}
+        />
+      </div>
+      <div className={css['form-row']}>
+        <label htmlFor="tags" className={css['form-labels']}>
+          Tags
+        </label>
+        <input
+          type="text"
+          name="tag"
+          id="tag"
+          className={cn(css['input'], {
+            [css['invalid']]: !formValidState.tag,
+          })}
+        />
+      </div>
+
       <textarea
         name="post"
         cols={30}
