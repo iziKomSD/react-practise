@@ -30,20 +30,28 @@ function JournalForm({ onSubmit }) {
   useEffect(() => {
     if (isFormReadyToSubmit) {
       onSubmit(values)
+      dispatchForm({ type: 'CLEAR' })
     }
   }, [isFormReadyToSubmit])
 
+  const onChange = (e) => {
+    dispatchForm({
+      type: 'SET_VALUE',
+      payload: { [e.target.name]: e.target.value },
+    })
+  }
+
   const addJournalItem = (e) => {
     e.preventDefault()
-    const formData = new FormData(e.target)
-    const formProps = Object.fromEntries(formData)
-    dispatchForm({ type: 'RESET_VALIDITY', payload: formProps })
+    dispatchForm({ type: 'SUBMIT' })
   }
   return (
     <form className={css['journal-form']} onSubmit={addJournalItem}>
       <div>
         <input
           type="text"
+          value={values.header}
+          onChange={onChange}
           name="header"
           className={cn(css['input'], {
             [css['invalid']]: !isValid.header,
@@ -56,6 +64,8 @@ function JournalForm({ onSubmit }) {
         </label>
         <input
           type="date"
+          value={values.date}
+          onChange={onChange}
           name="date"
           id="date"
           className={cn(css['input'], {
@@ -69,6 +79,8 @@ function JournalForm({ onSubmit }) {
         </label>
         <input
           type="text"
+          value={values.tag}
+          onChange={onChange}
           name="tag"
           id="tag"
           className={cn(css['input'], {
@@ -79,6 +91,8 @@ function JournalForm({ onSubmit }) {
 
       <textarea
         name="post"
+        value={values.post}
+        onChange={onChange}
         cols={30}
         rows={10}
         className={cn(css['input'], {
