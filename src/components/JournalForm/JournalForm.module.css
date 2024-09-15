@@ -4,17 +4,6 @@
   gap: 30px;
 }
 
-.input-title {
-  font-family: 'Source Sans 3', sans-serif;
-  border: none;
-  background: none;
-  font-style: 32px;
-  font-weight: 600;
-  line-height: normal;
-  border-bottom: 1px solid #272727;
-  width: 100%;
-}
-
 .form-row {
   display: flex;
   align-items: center;
@@ -32,7 +21,7 @@
   font-family: 'Source Sans 3', sans-serif;
   border: none;
   background: none;
-  font-style: 14px;
+  font-size: 14px;
   font-weight: 600;
   line-height: normal;
   border-bottom: 1px solid #272727;
