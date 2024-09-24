@@ -4,6 +4,7 @@ import { useEffect, useReducer, useRef } from 'react'
 import cn from 'classnames'
 import { formReducer, INITIAL_STATE } from './JournalForm.state'
 import Input from '../Input/Input'
+import { UserContext } from '../../context/userContext'
 
 // const INITIAL_STATE2 = {
 //   header: true,
@@ -69,61 +70,66 @@ function JournalForm({ onSubmit }) {
     dispatchForm({ type: 'SUBMIT' })
   }
   return (
-    <form className={css['journal-form']} onSubmit={addJournalItem}>
-      <div>
-        <Input
-          type="text"
-          ref={titleRef}
-          value={values.header}
-          onChange={onChange}
-          name="header"
-          isValid={isValid.header}
-          appearance="title"
-        />
-      </div>
-      <div className={css['form-row']}>
-        <label htmlFor="date" className={css['form-labels']}>
-          Date
-        </label>
-        <Input
-          type="date"
-          ref={dateRef}
-          value={values.date}
-          onChange={onChange}
-          isValid={isValid.date}
-          name="date"
-          id="date"
-        />
-      </div>
-      <div className={css['form-row']}>
-        <label htmlFor="tags" className={css['form-labels']}>
-          Tags
-        </label>
-        <Input
-          type="text"
-          ref={tagRef}
-          value={values.tag}
-          onChange={onChange}
-          isValid={isValid.tag}
-          name="tag"
-          id="tag"
-        />
-      </div>
+    <UserContext.Consumer>
+      {(context) => (
+        <form className={css['journal-form']} onSubmit={addJournalItem}>
+          {context.userId}
+          <div>
+            <Input
+              type="text"
+              ref={titleRef}
+              value={values.header}
+              onChange={onChange}
+              name="header"
+              isValid={isValid.header}
+              appearance="title"
+            />
+          </div>
+          <div className={css['form-row']}>
+            <label htmlFor="date" className={css['form-labels']}>
+              Date
+            </label>
+            <Input
+              type="date"
+              ref={dateRef}
+              value={values.date}
+              onChange={onChange}
+              isValid={isValid.date}
+              name="date"
+              id="date"
+            />
+          </div>
+          <div className={css['form-row']}>
+            <label htmlFor="tags" className={css['form-labels']}>
+              Tags
+            </label>
+            <Input
+              type="text"
+              ref={tagRef}
+              value={values.tag}
+              onChange={onChange}
+              isValid={isValid.tag}
+              name="tag"
+              id="tag"
+            />
+          </div>
 
-      <textarea
-        name="post"
-        ref={postRef}
-        value={values.post}
-        onChange={onChange}
-        cols={30}
-        rows={10}
-        className={cn(css['input'], {
-          [css['invalid']]: !isValid.post,
-        })}
-      />
+          <textarea
+            name="post"
+            ref={postRef}
+            value={values.post}
+            onChange={onChange}
+            cols={30}
+            rows={10}
+            className={cn(css['input'], {
+              [css['invalid']]: !isValid.post,
+            })}
+          />
 
-      <Button text="Save" />
-    </form>
+          <Button text="Save" />
+        </form>
+      )}
+    </UserContext.Consumer>
   )
 }
 
